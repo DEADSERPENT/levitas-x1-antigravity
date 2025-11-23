@@ -8,3 +8,6 @@ export { default as Pricing } from './Pricing';
 export { default as Safety } from './Safety';
 export { default as FAQ } from './FAQ';
 export { default as Footer } from './Footer';
+export { default as PageHeader } from './PageHeader';
+export { default as ContentSection } from './ContentSection';
+export { default as Breadcrumb } from './Breadcrumb';
