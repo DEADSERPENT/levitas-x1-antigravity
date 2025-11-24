@@ -4,32 +4,32 @@ import Link from 'next/link';
 
 const footerLinks = {
   product: [
-    { label: 'Technology', href: '#technology' },
-    { label: 'Specifications', href: '#specs' },
-    { label: 'Applications', href: '#applications' },
-    { label: 'Pricing', href: '#pricing' },
-    { label: 'Enterprise', href: '#' },
+    { label: 'Technology', href: '/technology' },
+    { label: 'Specifications', href: '/products/compare' },
+    { label: 'Applications', href: '/applications/logistics' },
+    { label: 'Pricing', href: '/pricing' },
+    { label: 'Enterprise', href: '/products/enterprise' },
   ],
   legal: [
-    { label: 'Privacy Policy', href: '#' },
-    { label: 'Terms of Service', href: '#' },
-    { label: 'Terms of Physics', href: '#' },
-    { label: 'Safety Guidelines', href: '#' },
-    { label: 'Export Compliance', href: '#' },
+    { label: 'Privacy Policy', href: '/privacy' },
+    { label: 'Terms of Service', href: '/terms' },
+    { label: 'Terms of Physics', href: '/legal' },
+    { label: 'Safety Guidelines', href: '/safety' },
+    { label: 'Export Compliance', href: '/legal' },
   ],
   support: [
-    { label: 'Contact', href: '#' },
-    { label: 'Quantum Support', href: '#' },
-    { label: 'Documentation', href: '#' },
-    { label: 'Training Portal', href: '#' },
-    { label: 'API Reference', href: '#' },
+    { label: 'Contact', href: '/contact' },
+    { label: 'Quantum Support', href: '/support' },
+    { label: 'Documentation', href: '/docs' },
+    { label: 'Training Portal', href: '/training' },
+    { label: 'API Reference', href: '/api' },
   ],
   company: [
-    { label: 'About', href: '#' },
-    { label: 'Careers', href: '#' },
-    { label: 'Press', href: '#' },
-    { label: 'Investors', href: '#' },
-    { label: 'Research', href: '#' },
+    { label: 'About', href: '/about' },
+    { label: 'Careers', href: '/careers' },
+    { label: 'Press', href: '/press' },
+    { label: 'Investors', href: '/about' },
+    { label: 'Research', href: '/applications/research' },
   ],
 };
 
@@ -72,7 +72,7 @@ export default function Footer() {
             <ul className="space-y-3">
               {footerLinks.product.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-sm text-[var(--text-secondary)] hover:text-[var(--neon-cyan)] transition-colors">
+                  <Link href={link.href} className="text-sm text-[var(--text-secondary)] hover:text-[var(--neon-cyan)] transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] hover:translate-x-1">
                     {link.label}
                   </Link>
                 </li>
@@ -87,7 +87,7 @@ export default function Footer() {
             <ul className="space-y-3">
               {footerLinks.legal.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-sm text-[var(--text-secondary)] hover:text-[var(--neon-cyan)] transition-colors">
+                  <Link href={link.href} className="text-sm text-[var(--text-secondary)] hover:text-[var(--neon-cyan)] transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] hover:translate-x-1">
                     {link.label}
                   </Link>
                 </li>
@@ -102,7 +102,7 @@ export default function Footer() {
             <ul className="space-y-3">
               {footerLinks.support.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-sm text-[var(--text-secondary)] hover:text-[var(--neon-cyan)] transition-colors">
+                  <Link href={link.href} className="text-sm text-[var(--text-secondary)] hover:text-[var(--neon-cyan)] transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] hover:translate-x-1">
                     {link.label}
                   </Link>
                 </li>

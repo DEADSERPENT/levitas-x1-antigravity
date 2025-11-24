@@ -1,0 +1,72 @@
+---
+title: "NIST Standards and the Future of Quantum-Safe Security"
+slug: "nist-pqc-standards"
+date: "2024-10-28"
+author: "Marcus Chen"
+excerpt: "How Levitas is implementing post-quantum cryptography to future-proof your X1 unit."
+tags: ["security", "quantum", "cryptography"]
+readTime: "6 min read"
+---
+
+# NIST Standards and the Future of Quantum-Safe Security
+
+As quantum computing advances, so does the threat to traditional cryptographic systems. At Levitas, we're committed to staying ahead of these challenges with post-quantum cryptography (PQC).
+
+## The Quantum Threat
+
+Traditional encryption methods like RSA and ECC rely on mathematical problems that are hard for classical computers but potentially easy for quantum computers. Shor's algorithm, for instance, could break these systems in hours rather than millennia.
+
+### Timeline to Q-Day
+
+- **2024**: 1,000+ qubit systems emerging
+- **2027-2030**: Estimated cryptographically relevant quantum computers
+- **2030+**: Widespread quantum computing availability
+
+## NIST's Post-Quantum Standards
+
+In 2024, NIST finalized the first post-quantum cryptographic standards:
+
+| Algorithm | Type | Use Case |
+|-----------|------|----------|
+| ML-KEM (CRYSTALS-Kyber) | Lattice-based | Key encapsulation |
+| ML-DSA (CRYSTALS-Dilithium) | Lattice-based | Digital signatures |
+| SLH-DSA (SPHINCS+) | Hash-based | Digital signatures |
+
+## Levitas X1 Security Implementation
+
+Every X1 unit now ships with quantum-safe security built in:
+
+### 1. Secure Boot Chain
+
+```
+Boot Sequence:
+1. Hardware root of trust verification
+2. ML-DSA signature check on bootloader
+3. Firmware integrity validation
+4. Application layer verification
+```
+
+### 2. Communication Security
+
+All data between your X1 and cloud services uses hybrid encryption:
+
+- **Classical**: AES-256-GCM for current protection
+- **Post-Quantum**: ML-KEM for future-proofing
+
+### 3. Firmware Updates
+
+Updates are signed with both traditional (ECDSA) and post-quantum (ML-DSA) signatures. Your X1 validates both before accepting any update.
+
+## What This Means for You
+
+**Today**: Your X1 is protected by industry-standard encryption that no current system can break.
+
+**Tomorrow**: When quantum computers become powerful enough to threaten classical encryption, your X1 will already be protected.
+
+## Our Commitment
+
+We continuously monitor developments in quantum computing and cryptography. As new threats emerge or standards evolve, your X1 will receive automatic security updates to maintain the highest level of protection.
+
+---
+
+*Marcus Chen is the Head of Security at Levitas, previously with the NSA's Cybersecurity Directorate.*

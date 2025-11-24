@@ -1,76 +1,58 @@
 'use client';
 
-const features = [
+import { ReactNode } from 'react';
+import {
+  InertiaIcon,
+  PowerIcon,
+  SafetyIcon,
+  ComputeIcon,
+  EnvironmentIcon,
+  ChassisIcon,
+} from './icons';
+
+interface Feature {
+  label: string;
+  title: string;
+  description: string;
+  icon: ReactNode;
+}
+
+const features: Feature[] = [
   {
     label: 'INERTIA_NULLIFICATION',
     title: 'Zero Inertia',
     description: 'Effortlessly manipulate objects up to 250kg with fingertip precision. Our quantum flux field completely neutralizes gravitational and inertial forces.',
-    icon: (
-      <svg viewBox="0 0 64 64" className="w-full h-full">
-        <circle cx="32" cy="32" r="28" className="fill-none stroke-[var(--neon-cyan)] stroke-[1.5]" />
-        <circle cx="32" cy="32" r="8" className="fill-[var(--neon-cyan)]" />
-        <path d="M32 4 L32 16 M32 48 L32 60 M4 32 L16 32 M48 32 L60 32" className="fill-none stroke-[var(--neon-cyan)] stroke-[1.5]" />
-      </svg>
-    ),
+    icon: <InertiaIcon className="w-full h-full text-[var(--neon-cyan)]" />,
   },
   {
     label: 'POWER_SYSTEM',
     title: 'Nuclear Diamond Cell',
     description: '50-year betavoltaic power cell using carbon-14 diamond semiconductors. Zero charging. Zero maintenance. Perpetual operation within your lifetime.',
-    icon: (
-      <svg viewBox="0 0 64 64" className="w-full h-full">
-        <polygon points="32,4 58,24 48,58 16,58 6,24" className="fill-none stroke-[var(--neon-cyan)] stroke-[1.5]" />
-        <circle cx="32" cy="32" r="10" className="fill-[var(--neon-cyan)]" />
-      </svg>
-    ),
+    icon: <PowerIcon className="w-full h-full text-[var(--neon-cyan)]" />,
   },
   {
     label: 'SAFETY_PROTOCOL',
     title: 'Auto-Descent',
     description: 'Graviton dampening system ensures controlled descent in any failure scenario. Triple-redundant sensors prevent uncontrolled drops. Always land safely.',
-    icon: (
-      <svg viewBox="0 0 64 64" className="w-full h-full">
-        <path d="M32 8 L32 48" className="fill-none stroke-[var(--neon-cyan)] stroke-[1.5]" />
-        <path d="M20 40 L32 52 L44 40" className="fill-none stroke-[var(--neon-cyan)] stroke-[1.5]" />
-        <circle cx="32" cy="56" r="4" className="fill-[var(--neon-cyan)]" />
-      </svg>
-    ),
+    icon: <SafetyIcon className="w-full h-full text-[var(--neon-cyan)]" />,
   },
   {
     label: 'COMPUTE_CORE',
     title: 'Neural Engine',
     description: 'Quantum-classical hybrid processor adjusts flux field parameters 10,000 times per second. Real-time environmental adaptation. Imperceptible corrections.',
-    icon: (
-      <svg viewBox="0 0 64 64" className="w-full h-full">
-        <circle cx="32" cy="32" r="24" className="fill-none stroke-[var(--neon-cyan)] stroke-[1.5]" />
-        <path d="M20 32 Q26 20 32 32 Q38 44 44 32" className="fill-none stroke-[var(--neon-cyan)] stroke-[1.5]" />
-        <circle cx="20" cy="32" r="4" className="fill-[var(--neon-cyan)]" />
-        <circle cx="44" cy="32" r="4" className="fill-[var(--neon-cyan)]" />
-      </svg>
-    ),
+    icon: <ComputeIcon className="w-full h-full text-[var(--neon-cyan)]" />,
   },
   {
     label: 'ENV_IMPACT',
     title: 'Zero Emission',
     description: 'Silent operation. No combustion. No exhaust. No electromagnetic interference beyond 2 meters. The cleanest propulsion system ever created.',
-    icon: (
-      <svg viewBox="0 0 64 64" className="w-full h-full">
-        <circle cx="32" cy="32" r="20" className="fill-none stroke-[var(--neon-cyan)] stroke-[1.5]" />
-        <circle cx="32" cy="32" r="12" className="fill-none stroke-[var(--neon-cyan)] stroke-[1.5]" />
-        <circle cx="32" cy="32" r="4" className="fill-[var(--neon-cyan)]" />
-      </svg>
-    ),
+    icon: <EnvironmentIcon className="w-full h-full text-[var(--neon-cyan)]" />,
   },
   {
     label: 'CHASSIS_SPEC',
     title: 'Compact Form',
     description: 'Aerospace-grade Ti-6Al-4V titanium chassis. 4.2kg total weight. Ergonomic grip surfaces. Fits standard equipment mounts. Built to military specifications.',
-    icon: (
-      <svg viewBox="0 0 64 64" className="w-full h-full">
-        <rect x="16" y="16" width="32" height="32" rx="4" className="fill-none stroke-[var(--neon-cyan)] stroke-[1.5]" />
-        <rect x="24" y="24" width="16" height="16" rx="2" className="fill-[var(--neon-cyan)]" />
-      </svg>
-    ),
+    icon: <ChassisIcon className="w-full h-full text-[var(--neon-cyan)]" />,
   },
 ];
 
@@ -96,11 +78,11 @@ export default function Features() {
           {features.map((feature, index) => (
             <div
               key={feature.title}
-              className="card group"
-              style={{ animationDelay: `${index * 100}ms` }}
+              className="card group animate-slide-up"
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="relative z-10">
-                <div className="w-16 h-16 mb-4 text-[var(--neon-cyan)] transition-transform group-hover:scale-110">
+                <div className="w-16 h-16 mb-4 text-[var(--neon-cyan)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110 group-hover:rotate-3">
                   {feature.icon}
                 </div>
                 <div className="text-xs font-mono text-[var(--neon-violet)] tracking-wider mb-2">

@@ -1,28 +1,44 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
+import { DiamondIcon, PlayIcon, InfinityIcon } from './icons';
 
 export default function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
+  const deviceRef = useRef<HTMLDivElement>(null);
+
+  // Throttle function for performance optimization
+  const throttle = useCallback(<T extends (...args: Parameters<T>) => void>(
+    func: T,
+    limit: number
+  ): ((...args: Parameters<T>) => void) => {
+    let inThrottle = false;
+    return (...args: Parameters<T>) => {
+      if (!inThrottle) {
+        func(...args);
+        inThrottle = true;
+        setTimeout(() => (inThrottle = false), limit);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      if (!heroRef.current) return;
+      if (!deviceRef.current) return;
       const { clientX, clientY } = e;
       const { innerWidth, innerHeight } = window;
       const x = (clientX / innerWidth - 0.5) * 20;
       const y = (clientY / innerHeight - 0.5) * 20;
 
-      const device = heroRef.current.querySelector('.device-container') as HTMLElement;
-      if (device) {
-        device.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
-      }
+      deviceRef.current.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+    const throttledMouseMove = throttle(handleMouseMove, 16); // ~60fps
+
+    window.addEventListener('mousemove', throttledMouseMove);
+    return () => window.removeEventListener('mousemove', throttledMouseMove);
+  }, [throttle]);
 
   return (
     <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
@@ -59,13 +75,13 @@ export default function Hero() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
-              <Link href="#pricing" className="btn btn-primary text-base px-8 py-4">
-                <span>◈</span>
+              <Link href="/pricing" className="btn btn-primary text-base px-8 py-4">
+                <DiamondIcon className="w-4 h-4" />
                 Acquire Unit
               </Link>
-              <Link href="#demo" className="btn btn-secondary text-base px-8 py-4">
-                <span>▶</span>
-                Run Simulation
+              <Link href="/technology" className="btn btn-secondary text-base px-8 py-4">
+                <PlayIcon className="w-4 h-4" />
+                How It Works
               </Link>
             </div>
 
@@ -79,8 +95,9 @@ export default function Hero() {
               </div>
               <div className="w-px h-12 bg-[var(--border-glow)]" />
               <div className="text-center">
-                <div className="font-[family-name:var(--font-orbitron)] text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">
-                  ∞<span className="text-base text-[var(--neon-cyan)]">hrs</span>
+                <div className="font-[family-name:var(--font-orbitron)] text-2xl sm:text-3xl font-bold text-[var(--text-primary)] flex items-center justify-center gap-1">
+                  <InfinityIcon className="w-8 h-8" />
+                  <span className="text-base text-[var(--neon-cyan)]">hrs</span>
                 </div>
                 <div className="text-xs font-mono text-[var(--text-muted)] tracking-wider">RUNTIME</div>
               </div>
@@ -96,7 +113,7 @@ export default function Hero() {
 
           {/* Right Column - Device */}
           <div className="relative flex items-center justify-center perspective-[1000px]">
-            <div className="device-container relative w-80 h-80 sm:w-96 sm:h-96 transition-transform duration-100 ease-out" style={{ transformStyle: 'preserve-3d' }}>
+            <div ref={deviceRef} className="device-container relative w-80 h-80 sm:w-96 sm:h-96 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" style={{ transformStyle: 'preserve-3d', willChange: 'transform', backfaceVisibility: 'hidden' }}>
               {/* Orbital Rings */}
               <div className="absolute inset-0 border-2 border-[var(--neon-cyan)]/30 rounded-full animate-[ring-rotate_20s_linear_infinite]" />
               <div className="absolute inset-8 border border-[var(--neon-violet)]/20 rounded-full animate-[ring-rotate_15s_linear_infinite_reverse]" />

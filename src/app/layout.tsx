@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ToastProvider } from "@/components/Toast";
 
 export const metadata: Metadata = {
   title: "Levitas X1 | Antigravity Module - Gravity Is Obsolete",
@@ -28,8 +29,17 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        <div className="grid-overlay" />
-        {children}
+        <ToastProvider>
+          {/* Skip to main content link for accessibility */}
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[var(--neon-cyan)] focus:text-[var(--bg-primary)] focus:rounded focus:font-semibold focus:outline-none"
+          >
+            Skip to main content
+          </a>
+          <div className="grid-overlay" aria-hidden="true" />
+          {children}
+        </ToastProvider>
       </body>
     </html>
   );

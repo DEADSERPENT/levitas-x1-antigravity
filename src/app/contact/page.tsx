@@ -1,6 +1,7 @@
 import { Navbar, Footer } from '@/components';
 import PageHeader from '@/components/PageHeader';
 import ContentSection from '@/components/ContentSection';
+import ContactForm from '@/components/ContactForm';
 
 export const metadata = {
   title: 'Contact Levitas Industries | Get in Touch',
@@ -53,32 +54,7 @@ export default function ContactPage() {
 
           <div>
             <h2 className="font-['Orbitron',system-ui,sans-serif] text-2xl font-bold text-[var(--text-primary)] mb-6">Send a Message</h2>
-            <form className="space-y-4">
-              <div>
-                <label className="block text-[var(--text-secondary)] text-sm mb-2">Name</label>
-                <input type="text" className="w-full px-4 py-3 bg-[var(--bg-card)] border border-[var(--border-glow)] rounded-lg text-[var(--text-primary)] focus:border-[var(--neon-cyan)] focus:outline-none" />
-              </div>
-              <div>
-                <label className="block text-[var(--text-secondary)] text-sm mb-2">Email</label>
-                <input type="email" className="w-full px-4 py-3 bg-[var(--bg-card)] border border-[var(--border-glow)] rounded-lg text-[var(--text-primary)] focus:border-[var(--neon-cyan)] focus:outline-none" />
-              </div>
-              <div>
-                <label className="block text-[var(--text-secondary)] text-sm mb-2">Subject</label>
-                <select className="w-full px-4 py-3 bg-[var(--bg-card)] border border-[var(--border-glow)] rounded-lg text-[var(--text-primary)] focus:border-[var(--neon-cyan)] focus:outline-none">
-                  <option>Sales Inquiry</option>
-                  <option>Technical Support</option>
-                  <option>Enterprise Solutions</option>
-                  <option>Partnership</option>
-                  <option>Press/Media</option>
-                  <option>Other</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-[var(--text-secondary)] text-sm mb-2">Message</label>
-                <textarea rows={5} className="w-full px-4 py-3 bg-[var(--bg-card)] border border-[var(--border-glow)] rounded-lg text-[var(--text-primary)] focus:border-[var(--neon-cyan)] focus:outline-none" />
-              </div>
-              <button type="submit" className="btn btn-primary w-full">Send Message</button>
-            </form>
+            <ContactForm />
           </div>
         </div>
       </ContentSection>

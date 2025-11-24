@@ -2,6 +2,8 @@ import { Navbar, Footer } from '@/components';
 import ContentSection from '@/components/ContentSection';
 import Breadcrumb from '@/components/Breadcrumb';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 
 const articles: Record<string, { title: string; date: string; category: string; content: string[] }> = {
   'faa-certification-milestone': {
@@ -46,26 +48,43 @@ const articles: Record<string, { title: string; date: string; category: string; 
   },
 };
 
+// Type for page props
+interface PageProps {
+  params: Promise<{ slug: string }>;
+}
+
 export function generateStaticParams() {
   return Object.keys(articles).map((slug) => ({ slug }));
 }
 
-export default function BlogArticle({ params }: { params: { slug: string } }) {
-  const article = articles[params.slug];
+// Dynamic metadata generation
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const article = articles[slug];
 
   if (!article) {
-    return (
-      <main className="relative min-h-screen">
-        <Navbar />
-        <ContentSection>
-          <div className="text-center py-20">
-            <h1 className="section-title">Article Not Found</h1>
-            <Link href="/blog" className="btn btn-primary mt-8">Back to Blog</Link>
-          </div>
-        </ContentSection>
-        <Footer />
-      </main>
-    );
+    return {
+      title: 'Article Not Found | Levitas Industries',
+    };
+  }
+
+  return {
+    title: `${article.title} | Levitas Industries`,
+    description: article.content[0]?.substring(0, 160) + '...',
+    openGraph: {
+      title: article.title,
+      description: article.content[0]?.substring(0, 160) + '...',
+      type: 'article',
+    },
+  };
+}
+
+export default async function BlogArticle({ params }: PageProps) {
+  const { slug } = await params;
+  const article = articles[slug];
+
+  if (!article) {
+    notFound(); // Triggers proper 404 status code
   }
 
   return (

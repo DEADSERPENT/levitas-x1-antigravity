@@ -1,3 +1,4 @@
+// Main components
 export { default as Navbar } from './Navbar';
 export { default as Hero } from './Hero';
 export { default as Features } from './Features';
@@ -11,3 +12,19 @@ export { default as Footer } from './Footer';
 export { default as PageHeader } from './PageHeader';
 export { default as ContentSection } from './ContentSection';
 export { default as Breadcrumb } from './Breadcrumb';
+export { default as ContactForm } from './ContactForm';
+export { ToastProvider, useToast } from './Toast';
+
+// New components
+export { default as PageHero } from './PageHero';
+export { default as MDXContent, MDXComponents } from './MDXContent';
+export { default as Icons3D } from './Icons3D';
+
+// Aliases for backward compatibility
+export { default as Header } from './Header';
+export { default as HeroSection } from './HeroSection';
+export { default as FeaturesSection } from './FeaturesSection';
+export { default as PricingSection } from './PricingSection';
+
+// Icons
+export * from './icons';

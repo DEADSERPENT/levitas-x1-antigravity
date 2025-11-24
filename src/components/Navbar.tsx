@@ -1,31 +1,76 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Throttle function for scroll performance
+  const throttle = useCallback(<T extends (...args: Parameters<T>) => void>(
+    func: T,
+    limit: number
+  ): ((...args: Parameters<T>) => void) => {
+    let inThrottle = false;
+    return (...args: Parameters<T>) => {
+      if (!inThrottle) {
+        func(...args);
+        inThrottle = true;
+        setTimeout(() => (inThrottle = false), limit);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+
+    const throttledScroll = throttle(handleScroll, 100);
+
+    window.addEventListener('scroll', throttledScroll, { passive: true });
+    return () => window.removeEventListener('scroll', throttledScroll);
+  }, [throttle]);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
+  // Helper function to handle hash links from subpages
+  const getNavHref = (href: string) => {
+    if (href.startsWith('#')) {
+      return pathname === '/' ? href : `/${href}`;
+    }
+    return href;
+  };
 
   const navLinks = [
-    { href: '#technology', label: 'Technology' },
-    { href: '#specs', label: 'Specifications' },
-    { href: '#applications', label: 'Applications' },
-    { href: '#pricing', label: 'Pricing' },
-    { href: '#faq', label: 'FAQ' },
+    { href: '/technology', label: 'Technology' },
+    { href: '/products/compare', label: 'Specifications' },
+    { href: '/applications/logistics', label: 'Applications' },
+    { href: '/pricing', label: 'Pricing' },
+    { href: '/faq', label: 'FAQ' },
   ];
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
         scrolled ? 'nav-scrolled' : 'bg-transparent'
       }`}
     >
@@ -65,7 +110,7 @@ export default function Navbar() {
               <span>SYSTEM ONLINE</span>
             </div>
             <Link
-              href="#pricing"
+              href="/pricing"
               className="btn btn-primary text-sm"
             >
               Acquire Unit
@@ -78,15 +123,15 @@ export default function Navbar() {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
-            <span className={`w-6 h-0.5 bg-[var(--text-primary)] transition-transform ${mobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-            <span className={`w-6 h-0.5 bg-[var(--text-primary)] transition-opacity ${mobileMenuOpen ? 'opacity-0' : ''}`} />
-            <span className={`w-6 h-0.5 bg-[var(--text-primary)] transition-transform ${mobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+            <span className={`w-6 h-0.5 bg-[var(--text-primary)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] origin-center ${mobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+            <span className={`w-6 h-0.5 bg-[var(--text-primary)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${mobileMenuOpen ? 'opacity-0 scale-0' : ''}`} />
+            <span className={`w-6 h-0.5 bg-[var(--text-primary)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] origin-center ${mobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
           </button>
         </div>
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden absolute top-20 left-0 right-0 bg-[var(--bg-primary)]/95 backdrop-blur-xl border-b border-[var(--border-glow)] py-6 px-4">
+          <div className="md:hidden absolute top-20 left-0 right-0 bg-[var(--bg-primary)]/95 backdrop-blur-xl border-b border-[var(--border-glow)] py-6 px-4 animate-[menu-slide-down_0.5s_cubic-bezier(0.16,1,0.3,1)_forwards]">
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
                 <Link
@@ -99,7 +144,7 @@ export default function Navbar() {
                 </Link>
               ))}
               <Link
-                href="#pricing"
+                href="/pricing"
                 className="btn btn-primary mt-4"
                 onClick={() => setMobileMenuOpen(false)}
               >

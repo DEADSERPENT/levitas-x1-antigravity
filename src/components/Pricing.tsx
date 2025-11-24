@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { DiamondIcon, CheckIcon } from './icons';
 
 const plans = [
   {
@@ -62,14 +63,15 @@ export default function Pricing() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          {plans.map((plan) => (
+          {plans.map((plan, index) => (
             <div
               key={plan.name}
-              className={`relative rounded-lg overflow-hidden transition-all duration-300 ${
+              className={`relative rounded-lg overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:translate-y-[-8px] animate-slide-up ${
                 plan.featured
-                  ? 'bg-gradient-to-b from-[var(--bg-card)] to-[var(--bg-panel)] border-2 border-[var(--neon-cyan)] shadow-[0_0_40px_var(--glow-cyan)]'
-                  : 'bg-[var(--bg-card)] border border-[var(--border-glow)]'
+                  ? 'bg-gradient-to-b from-[var(--bg-card)] to-[var(--bg-panel)] border-2 border-[var(--neon-cyan)] shadow-[0_0_40px_var(--glow-cyan)] hover:shadow-[0_0_60px_var(--glow-cyan)]'
+                  : 'bg-[var(--bg-card)] border border-[var(--border-glow)] hover:border-[var(--neon-cyan)] hover:shadow-[0_0_30px_var(--glow-cyan)]'
               }`}
+              style={{ animationDelay: `${index * 0.15}s` }}
             >
               {plan.featured && (
                 <>
@@ -108,15 +110,17 @@ export default function Pricing() {
                 </div>
 
                 {/* Features */}
-                <ul className="space-y-3 mb-8">
+                <ul className="space-y-3 mb-8" role="list">
                   {plan.features.map((feature) => (
                     <li key={feature.text} className="flex items-center gap-3">
-                      <span className={feature.included ? 'text-[var(--neon-cyan)]' : 'text-[var(--text-muted)]'}>
-                        ◈
-                      </span>
+                      {feature.included ? (
+                        <CheckIcon className="w-4 h-4 text-[var(--neon-cyan)] flex-shrink-0" />
+                      ) : (
+                        <DiamondIcon className="w-3 h-3 text-[var(--text-muted)] flex-shrink-0" />
+                      )}
                       <span className={`text-sm ${
                         !feature.included
-                          ? 'text-[var(--text-muted)]'
+                          ? 'text-[var(--text-muted)] line-through'
                           : feature.highlight
                             ? 'text-[var(--text-primary)] font-medium'
                             : 'text-[var(--text-secondary)]'
@@ -129,7 +133,7 @@ export default function Pricing() {
 
                 {/* CTA */}
                 <Link
-                  href="#reserve"
+                  href="/contact"
                   className={`btn w-full ${plan.featured ? 'btn-primary' : 'btn-outline'}`}
                 >
                   {plan.cta}
