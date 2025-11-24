@@ -20,6 +20,9 @@ export { default as PageHero } from './PageHero';
 export { default as MDXContent, MDXComponents } from './MDXContent';
 export { default as Icons3D } from './Icons3D';
 
+// UI Components (Tailwind-based reusable components)
+export * from './ui';
+
 // Aliases for backward compatibility
 export { default as Header } from './Header';
 export { default as HeroSection } from './HeroSection';

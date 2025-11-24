@@ -9,52 +9,23 @@ import {
   EnvironmentIcon,
   ChassisIcon,
 } from './icons';
+import { features as featuresData, Feature } from '@/data/features';
 
-interface Feature {
-  label: string;
-  title: string;
-  description: string;
-  icon: ReactNode;
-}
+// Map icon keys to actual icon components
+const iconMap: Record<Feature['iconKey'], ReactNode> = {
+  inertia: <InertiaIcon className="w-full h-full text-[var(--neon-cyan)]" />,
+  power: <PowerIcon className="w-full h-full text-[var(--neon-cyan)]" />,
+  safety: <SafetyIcon className="w-full h-full text-[var(--neon-cyan)]" />,
+  compute: <ComputeIcon className="w-full h-full text-[var(--neon-cyan)]" />,
+  environment: <EnvironmentIcon className="w-full h-full text-[var(--neon-cyan)]" />,
+  chassis: <ChassisIcon className="w-full h-full text-[var(--neon-cyan)]" />,
+};
 
-const features: Feature[] = [
-  {
-    label: 'INERTIA_NULLIFICATION',
-    title: 'Zero Inertia',
-    description: 'Effortlessly manipulate objects up to 250kg with fingertip precision. Our quantum flux field completely neutralizes gravitational and inertial forces.',
-    icon: <InertiaIcon className="w-full h-full text-[var(--neon-cyan)]" />,
-  },
-  {
-    label: 'POWER_SYSTEM',
-    title: 'Nuclear Diamond Cell',
-    description: '50-year betavoltaic power cell using carbon-14 diamond semiconductors. Zero charging. Zero maintenance. Perpetual operation within your lifetime.',
-    icon: <PowerIcon className="w-full h-full text-[var(--neon-cyan)]" />,
-  },
-  {
-    label: 'SAFETY_PROTOCOL',
-    title: 'Auto-Descent',
-    description: 'Graviton dampening system ensures controlled descent in any failure scenario. Triple-redundant sensors prevent uncontrolled drops. Always land safely.',
-    icon: <SafetyIcon className="w-full h-full text-[var(--neon-cyan)]" />,
-  },
-  {
-    label: 'COMPUTE_CORE',
-    title: 'Neural Engine',
-    description: 'Quantum-classical hybrid processor adjusts flux field parameters 10,000 times per second. Real-time environmental adaptation. Imperceptible corrections.',
-    icon: <ComputeIcon className="w-full h-full text-[var(--neon-cyan)]" />,
-  },
-  {
-    label: 'ENV_IMPACT',
-    title: 'Zero Emission',
-    description: 'Silent operation. No combustion. No exhaust. No electromagnetic interference beyond 2 meters. The cleanest propulsion system ever created.',
-    icon: <EnvironmentIcon className="w-full h-full text-[var(--neon-cyan)]" />,
-  },
-  {
-    label: 'CHASSIS_SPEC',
-    title: 'Compact Form',
-    description: 'Aerospace-grade Ti-6Al-4V titanium chassis. 4.2kg total weight. Ergonomic grip surfaces. Fits standard equipment mounts. Built to military specifications.',
-    icon: <ChassisIcon className="w-full h-full text-[var(--neon-cyan)]" />,
-  },
-];
+// Transform data features with icons
+const features = featuresData.map((feature) => ({
+  ...feature,
+  icon: iconMap[feature.iconKey],
+}));
 
 export default function Features() {
   return (

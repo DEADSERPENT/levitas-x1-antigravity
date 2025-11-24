@@ -16,11 +16,11 @@
   --neon-magenta: #ec4899;
   --neon-green: #22c55e;
 
-  /* Text Colors */
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-  --text-label: #475569;
+  /* Text Colors - WCAG AA Compliant (4.5:1 contrast ratio on dark backgrounds) */
+  --text-primary: #f8fafc;     /* White - highest contrast */
+  --text-secondary: #b8c5d6;   /* Lightened from #94a3b8 for 4.5:1+ ratio */
+  --text-muted: #8fa3bc;       /* Lightened from #64748b for 4.5:1+ ratio */
+  --text-label: #7a91a8;       /* Lightened from #475569 for better readability */
 
   /* State Colors */
   --success: #22c55e;
@@ -891,7 +891,7 @@ nav a {
   animation: gradient-shift 3s ease infinite;
 }
 
-/* ===== ACCESSIBILITY ===== */
+/* ===== ACCESSIBILITY - WCAG 2.1 AA Compliant ===== */
 
 .sr-only {
   position: absolute;
@@ -916,18 +916,20 @@ nav a {
   white-space: normal;
 }
 
-/* ===== IMPROVED CONTRAST ===== */
+/* ===== ENHANCED FOCUS STATES ===== */
 
-/* Ensure interactive elements have better visibility */
+/* High contrast focus ring for all interactive elements */
 .btn:focus-visible {
-  outline: 2px solid var(--neon-cyan);
-  outline-offset: 2px;
+  outline: 3px solid var(--neon-cyan);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(0, 240, 255, 0.25);
 }
 
 a:focus-visible {
   outline: 2px solid var(--neon-cyan);
-  outline-offset: 2px;
-  border-radius: 2px;
+  outline-offset: 3px;
+  border-radius: 4px;
+  text-decoration: underline;
 }
 
 input:focus-visible,
@@ -935,6 +937,73 @@ select:focus-visible,
 textarea:focus-visible {
   outline: 2px solid var(--neon-cyan);
   outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(0, 240, 255, 0.2);
+}
+
+/* Card focus for keyboard navigation */
+.card:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 4px;
+}
+
+/* Minimum touch target sizes (WCAG 2.5.5) */
+button,
+a,
+input[type="checkbox"],
+input[type="radio"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Inline links exception */
+p a,
+li a {
+  min-height: auto;
+  min-width: auto;
+}
+
+/* ===== HIGH CONTRAST MODE SUPPORT ===== */
+
+@media (prefers-contrast: high) {
+  :root {
+    --text-secondary: #d1d5db;
+    --text-muted: #a8b5c4;
+    --border-glow: rgba(0, 240, 255, 0.4);
+  }
+
+  .card {
+    border-width: 2px;
+  }
+
+  .btn {
+    border-width: 2px;
+  }
+}
+
+/* ===== FORCED COLORS MODE (Windows High Contrast) ===== */
+
+@media (forced-colors: active) {
+  .btn-primary {
+    background: ButtonFace;
+    color: ButtonText;
+    border: 2px solid ButtonText;
+  }
+
+  .btn-primary:hover,
+  .btn-primary:focus {
+    background: Highlight;
+    color: HighlightText;
+  }
+
+  .card {
+    border: 2px solid CanvasText;
+  }
+
+  .text-gradient {
+    background: none;
+    -webkit-text-fill-color: CanvasText;
+    color: CanvasText;
+  }
 }
 
 /* ===== RESPONSIVE ===== */
